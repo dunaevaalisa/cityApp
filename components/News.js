@@ -7,7 +7,7 @@ export default function News() {
 
   const getAllNews = () => {
     setLoading(true);
-    fetch(`https://newsdata.io/api/1/news?apikey=pub_43706549218a498aa3107c9c3f4c86067dd34&country=fi&language=en`)
+    fetch(`https://newsdata.io/api/1/news?apikey=pub_43706549218a498aa3107c9c3f4c86067dd34&country=fi`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -19,8 +19,7 @@ export default function News() {
         setLoading(false);
       })
       .catch(error => {
-        console.error('Error fetching news:', error);
-        Alert.alert('Error', 'Failed to fetch news. Please try again later.');
+        Alert.alert('Error', error); 
         setLoading(false);
       });
   };
@@ -80,7 +79,7 @@ export default function News() {
     return (
       <View>
         <FlatList
-          data={news}
+          keyExtractor={(item) => item.article_id.toString()}
           renderItem={({ item }) => (
             <View style={styles.newsContainer}>
               <Text style={styles.newsTitle}>Title: {item.title}</Text>
@@ -97,7 +96,7 @@ export default function News() {
               </TouchableOpacity>
             </View>
           )}
-          keyExtractor={(item) => item.article_id.toString()}
+          data={news}
           ListEmptyComponent={<Text>No news found</Text>}
         />
       </View>

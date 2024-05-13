@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { useState, useEffect } from 'react';
 
 export default function Main({navigation}) {

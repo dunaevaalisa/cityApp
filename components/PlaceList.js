@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity }
 import { initializeApp } from 'firebase/app';
 import { getDatabase, push, ref, onValue, update } from 'firebase/database';
 
-export default function Photogallery() {
+export default function PlaceList() {
   const firebaseConfig = {
     apiKey: "AIzaSyB-RoOQ_IeTIRBusRoXh0-mQ-jYQgZaiPg",
     authDomain: "cityapp-a9f2a.firebaseapp.com",
@@ -37,28 +37,28 @@ export default function Photogallery() {
   const saveItem = () => {
     push(ref(database, 'items/'), { title, visited: false })
       .then(() => {
-        console.log('Item saved successfully');
+        console.log('Item saved');
         setTitle('');
       })
       .catch((error) => {
-        console.error('Error saving item: ', error);
+        Alert.alert('Error', error); 
       });
   };
 
   const toggleVisited = (itemId, visited) => {
     update(ref(database, `items/${itemId}`), { visited: !visited })
       .then(() => {
-        console.log('Item visited status updated successfully');
+        console.log('Item status updated');
       })
       .catch((error) => {
-        console.error('Error updating visited status: ', error);
+        Alert.alert('Error', error); 
       });
   };
 
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder='Title'
+        placeholder='Place'
         style={styles.input}
         onChangeText={(text) => setTitle(text)}
         value={title}

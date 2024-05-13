@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TextInput, FlatList, Image, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, FlatList, Image, TouchableOpacity, Linking, ActivityIndicator} from 'react-native';
 import { useState, useEffect } from 'react';
 
 export default function Events() {
@@ -11,7 +11,7 @@ export default function Events() {
         fetch(`https://app.ticketmaster.com/discovery/v2/events.json?countryCode=FI&keyword=${keyword}&apikey=K28BaUXfgfv2hEhYt529Vdou30repj5R`)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Network error');
                 }
                 return response.json();
             })
@@ -21,8 +21,7 @@ export default function Events() {
                 setLoading(false);
             })
             .catch(error => {
-                console.error('Error fetching events:', error);
-                Alert.alert('Error', 'Failed to fetch events. Please try again later.');
+                Alert.alert('Error', error); 
                 setLoading(false);
             });
     }
@@ -42,8 +41,7 @@ export default function Events() {
             setLoading(false);
         })
         .catch(error => {
-            console.error('Error fetching events:', error);
-            Alert.alert('Error', 'Failed to fetch events. Please try again later.');
+            Alert.alert('Error', error); 
             setLoading(false);
         });
     }
@@ -52,6 +50,13 @@ export default function Events() {
         getAllEvents();
     }, []);
 
+    if (loading) {
+        return (
+          <View style={styles.container}> 
+            <ActivityIndicator size="large" color="#00ff00" />
+          </View>
+        );
+      } else {
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
@@ -65,7 +70,7 @@ export default function Events() {
                 <Button title="Show All Events" onPress={getAllEvents} />
             </View>
             <FlatList
-                data={events}
+                keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                     <View style={styles.eventContainer}>
                         <Text style={styles.eventTitle}>Event: {item.name}</Text>
@@ -84,11 +89,12 @@ export default function Events() {
                         </TouchableOpacity>
                     </View>
                 )}
-                keyExtractor={(item) => item.id.toString()}
+                data={events}
             />
             {loading && <ActivityIndicator size="large" color="#00ff00" />}
         </View>
     );
+}
 }
 
 const styles = StyleSheet.create({

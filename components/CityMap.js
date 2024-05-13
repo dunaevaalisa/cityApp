@@ -5,23 +5,23 @@ import * as Location from 'expo-location';
 
 export default function CityMap() {
     const [location, setLocation] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
     const [loading, setLoading] = useState(true);
   
     useEffect(() => {
       (async () => {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
-          setErrorMsg('Permission to access location was denied');
+          Alert.alert('No permission to get location')
           setLoading(false);
           return;
         }
   
-        let location = await Location.getCurrentPositionAsync({});
+        let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.High});
         setLocation(location.coords);
         setLoading(false);
       })();
     }, []);
+    
   
     if (loading) {
         return (
@@ -32,7 +32,7 @@ export default function CityMap() {
     } else if (!location) {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>{errorMsg}</Text>
+                <Text>No permission to get location</Text>
             </View>
         );
     } else {
@@ -52,7 +52,7 @@ export default function CityMap() {
                             latitude: location.latitude,
                             longitude: location.longitude,
                         }}
-                        title="Your Location"
+                        title="You are here!"
                     />
                 </MapView>
             </View>
