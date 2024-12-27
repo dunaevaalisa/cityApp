@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Button, TextInput, FlatList, Image, TouchableOpacity, Linking, ActivityIndicator} from 'react-native';
 import { useState, useEffect } from 'react';
+import { TICKETMASTER_API_KEY } from '@env';
 
 export default function Events() {
     const [keyword, setKeyword] = useState('');
@@ -8,7 +9,7 @@ export default function Events() {
 
     const getEvents = () => {
         setLoading(true);
-        fetch(`https://app.ticketmaster.com/discovery/v2/events.json?countryCode=FI&keyword=${keyword}&apikey=K28BaUXfgfv2hEhYt529Vdou30repj5R`)
+        fetch(`https://app.ticketmaster.com/discovery/v2/events.json?countryCode=FI&keyword=${keyword}&apikey=${TICKETMASTER_API_KEY}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network error');
@@ -28,7 +29,7 @@ export default function Events() {
 
     const getAllEvents = () => {
         setLoading(true);
-        fetch('https://app.ticketmaster.com/discovery/v2/events.json?countryCode=FI&apikey=K28BaUXfgfv2hEhYt529Vdou30repj5R')
+        fetch(`https://app.ticketmaster.com/discovery/v2/events.json?countryCode=FI&apikey=${TICKETMASTER_API_KEY}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

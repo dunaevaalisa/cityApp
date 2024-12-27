@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, push, ref, onValue, update } from 'firebase/database';
+import { FIREBASE_API, FIREBASE_API, FIREBASE_authDomain, FIREBASE_databaseURL, FIREBASE_projectId, FIREBASE_storageBucket, FIREBASE_messagingSenderId, FIREBASE_appId, FIREBASE_measurementId} from '@env';
 
 export default function PlaceList() {
   const firebaseConfig = {
-    apiKey: "AIzaSyB-RoOQ_IeTIRBusRoXh0-mQ-jYQgZaiPg",
-    authDomain: "cityapp-a9f2a.firebaseapp.com",
-    databaseURL: "https://cityapp-a9f2a-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "cityapp-a9f2a",
-    storageBucket: "cityapp-a9f2a.appspot.com",
-    messagingSenderId: "31824695602",
-    appId: "1:31824695602:web:1d7d90f49686e5075d872b",
-    measurementId: "G-T8RXZQZCFD"
+    apiKey: FIREBASE_API,
+    authDomain: FIREBASE_authDomain,
+    databaseURL: FIREBASE_databaseURL,
+    projectId: FIREBASE_projectId,
+    storageBucket: FIREBASE_storageBucket,
+    messagingSenderId: FIREBASE_messagingSenderId,
+    appId: FIREBASE_appId,
+    measurementId: FIREBASE_measurementId
   };
   
   const app = initializeApp(firebaseConfig);

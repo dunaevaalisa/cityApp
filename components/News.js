@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
+import { NEWS_API_KEY } from '@env';
 
 export default function News() {
   const [news, setNews] = useState([]);
@@ -7,7 +8,7 @@ export default function News() {
 
   const getAllNews = () => {
     setLoading(true);
-    fetch(`https://newsdata.io/api/1/news?apikey=pub_43706549218a498aa3107c9c3f4c86067dd34&country=fi`)
+    fetch(`https://newsdata.io/api/1/news?apikey=${NEWS_API_KEY}&country=fi`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

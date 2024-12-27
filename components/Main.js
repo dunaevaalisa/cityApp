@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { useState, useEffect } from 'react';
+import { OPENWEATHERMAP_API_KEY } from '@env';
 
 export default function Main({navigation}) {
   const [weather, setWeather] = useState(null); 
@@ -9,7 +10,7 @@ export default function Main({navigation}) {
   }, []);
 
   const getWeather = () => {
-    fetch('https://api.openweathermap.org/data/2.5/weather?lat=60.192059&lon=24.945831&appid=0ad1aa4e4e91dc62efe48d9fe52fa500&units=metric')
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=60.192059&lon=24.945831&appid=${OPENWEATHERMAP_API_KEY}&units=metric`)
       .then(response => response.json())
       .then(data => setWeather(data))
       .catch(error => console.error('Error fetching weather:', error));
